@@ -6,20 +6,36 @@ test('TC01 - Signup exitoso con datos válidos', async ({ page }) => {
 
   await page.goto(WEB);
   await page.click('#signin2');
-  await expect(page.locator('#sign-username')).toBeVisible();
+  await expect(page.locator('#signInModal')).toBeVisible();
 
-  const usuario = generarUsuario();
+  await page.fill('#sign-username', username);
+  await page.fill('#sign-password', password);
+  
+  const dialogPromise = page.waitForEvent('dialog');
+  await page.click('#signInModal .btn-primary');
+  const dialog = await dialogPromise;
+  console.log('Alerta signup exitoso:', dialog.message());
+  expect(dialog.message()).toContain('Sign up successful.');
+  await dialog.accept();
+
+  console.log('Usuario creado:', username);
+});
+
+test('TC02 - Signup con usuario duplicado muestra error', async ({ page, request }) => {
+  const { username, password } = await crearUsuarioPorAPI(request);
+  await page.goto(WEB);
+  await page.click('#signin2');
+  await expect(page.locator('#signInModal')).toBeVisible();
+
   await page.fill('#sign-username', username);
   await page.fill('#sign-password', password);
 
-  page.once('dialog', async (dialog) => {
-    console.log('Alerta:', dialog.message());
-    expect(dialog.message()).toContain('Sign up successful');
-    await dialog.accept();
-    });
+  const dialogPromise = page.waitForEvent('dialog');
+  await page.click('#signInModal .btn-primary');
+  const dialog = await dialogPromise;
+  console.log('Alerta duplicado:', dialog.message());
+  expect(dialog.message()).toContain('This user already exist.');
+  await dialog.accept();
 
-    await page.click('#signInModal .btn-primary');
-    await page.waitForTimeout(2000);
-
-    console.log('Usuario creado:', username);
+  console.log('Intento de signup con usuario duplicado:', username);
 });
