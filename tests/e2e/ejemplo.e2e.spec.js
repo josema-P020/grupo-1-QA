@@ -18,7 +18,10 @@
 const { test, expect } = require('@playwright/test');
 const { crearUsuarioPorAPI } = require('../helpers');
 
-test('E2E - Usuario creado por API puede ver la tienda', async ({ request, page }) => {
+test('E2E - Usuario creado por API puede ver la tienda', async ({
+  request,
+  page,
+}) => {
   // === FASE 1: SETUP con API (rapido, sin navegador) ===
   const usuario = await crearUsuarioPorAPI(request);
   console.log('Usuario creado por API:', usuario.username);
