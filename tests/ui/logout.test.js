@@ -47,4 +47,6 @@ test('TC05 - Logout exitoso con usuario dinámico', async ({
 
   await expect(page.locator('#login2')).toBeVisible();
   await expect(botonLogout).not.toBeVisible();
+
+  console.log('✅ Logout exitoso');
 });
