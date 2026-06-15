@@ -29,6 +29,14 @@ module.exports = defineConfig({
 
     // Captura screenshot solo si el test falla
     screenshot: 'only-on-failure',
+
+    use: {
+      /* Base URL to use in actions like `await page.goto('')`. */
+      // baseURL: 'http://localhost:3000',
+      launchOptions: { slowMo: 10000 },
+      /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+      trace: 'on-first-retry',
+    },
   },
 
   // Navegadores donde corren los tests
