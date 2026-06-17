@@ -8,13 +8,11 @@ Suite de tests automatizados sobre **DemoBlaze** usando Playwright.
 
 ## Integrantes
 
-> Completen con los nombres de su grupo:
+- Victoria Lizarraga
+- Florencia Aylen Choque
+- José Maria Pérez
 
-- Nombre Apellido
-- Nombre Apellido
-- Nombre Apellido
-
-**Grupo N - Seccion asignada:** (ej: Cart Management)
+**Grupo 1 "FVJ" - Signup + Login:**
 
 ---
 

@@ -1,46 +1,42 @@
 import { test, expect } from '@playwright/test';
+const { WEB, API, generarUsuario, crearUsuarioPorAPI } = require('../helpers');
 
 test('TC05 - Logout exitoso con usuario dinámico', async ({
   page,
   context,
   request,
 }) => {
-  const usernameDinamico = `alumno_${Date.now()}`;
-  const passwordDinamico = 'bootcamp123';
+  // Registrar usuario y obtener token
+  const usuario = await crearUsuarioPorAPI(request);
+  const { username, password } = usuario;
 
-  // 1. Registrar usuario y obtener token
-  await request.post('https://api.demoblaze.com/signup', {
-    data: { username: usernameDinamico, password: passwordDinamico },
-  });
-
-  const loginResponse = await request.post('https://api.demoblaze.com/login', {
-    data: { username: usernameDinamico, password: passwordDinamico },
+  const loginResponse = await request.post(`${API}/login`, {
+    data: { username, password },
   });
 
   const responseText = await loginResponse.text();
   const token = responseText.replace(/Auth_token:\s*|"/g, '').trim();
 
-  // busca exactamente estas dos cookies para loguear la UI
+  // INYECCIÓN DE COOKIES NATIVAS
+
   await context.addCookies([
     {
       name: 'tokenp_',
       value: token,
-      url: 'https://www.demoblaze.com',
+      url: WEB,
     },
     {
       name: 'user',
-      value: usernameDinamico,
-      url: 'https://www.demoblaze.com',
+      value: username,
+      url: WEB,
     },
   ]);
 
   // TEST Y VERIFICACIÓN EN UI
-  await page.goto('https://www.demoblaze.com/');
+  await page.goto(WEB);
 
   const saludoUsuario = page.locator('#nameofuser');
-  await expect(saludoUsuario).toContainText(`Welcome ${usernameDinamico}`, {
-    timeout: 8000,
-  });
+  await expect(saludoUsuario).toContainText(`Welcome ${username}`);
 
   const botonLogout = page.locator('#logout2');
   await botonLogout.click();
