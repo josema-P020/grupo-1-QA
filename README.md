@@ -12,7 +12,7 @@ Suite de tests automatizados sobre **DemoBlaze** usando Playwright.
 - Florencia Aylen Choque
 - José Maria Pérez
 
-**Grupo FVJ - Signup + Login:**
+**Grupo 1 "FVJ" - Signup + Login:**
 
 ---
 
