@@ -30,6 +30,8 @@ module.exports = defineConfig({
     // Captura screenshot solo si el test falla
     screenshot: 'only-on-failure',
 
+    //slowMo: 800
+
     use: {
       /* Base URL to use in actions like `await page.goto('')`. */
       // baseURL: 'http://localhost:3000',
