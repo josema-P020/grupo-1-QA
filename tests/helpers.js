@@ -15,10 +15,12 @@ const WEB = 'https://www.demoblaze.com';
  * Asi nunca choca con "usuario ya existe".
  */
 function generarUsuario() {
-  return {
-    username: `alumno_${Date.now()}`,
-    password: 'bootcamp123',
-  };
+  const aleatorio = Math.floor(Math.random() * 10000);
+  const username = `alumno_${Date.now()}_${aleatorio}`;
+  
+  const password = btoa('bootcamp123');
+
+  return { username, password };
 }
 
 /**

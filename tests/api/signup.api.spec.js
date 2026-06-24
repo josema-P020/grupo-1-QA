@@ -23,6 +23,8 @@ test('TC02 - Signup con usuario duplicado muestra error', async ({ request }) =>
     // Primero creamos un usuario nuevo
     const usuario = await crearUsuarioPorAPI(request);
 
+    console.log('Username:', usuario.username);
+    console.log('Password:', usuario.password);
     // Ahora intentamos hacer signup con el mismo usuario
     const response = await request.post(`${API}/signup`, {
     data: usuario,
