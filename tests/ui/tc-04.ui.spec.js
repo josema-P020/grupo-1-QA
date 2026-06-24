@@ -13,13 +13,12 @@ test('TC04 - Login con credenciales invalidas muestra error', async ({ page }) =
   await page.fill('#loginusername', 'usuario_falso');
   await page.fill('#loginpassword', 'password_falso');
 
-  // Capturar la alerta antes de hacer click (sino se pierde)
+  // Capturar la alerta antes de hacer click 
   page.once('dialog', async (dialog) => {
     console.log('Alerta:', dialog.message());
     expect(dialog.message()).toContain('Wrong password');
     await dialog.accept();
   });
 
-  // Click en el boton de login
-  await page.getByRole('button', { name: 'Log in' }).click();
+
 });

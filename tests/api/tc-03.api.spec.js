@@ -2,11 +2,11 @@ const { test, expect } = require('@playwright/test');
 const { API, generarUsuario } = require('../helpers');
 
 test('TC03 - Login con credenciales validas', async ({ request }) => {
-  // Primero creamos el usuario para asegurarnos que existe
+  // Creamos el usuario
   const usuario = generarUsuario();
   await request.post(`${API}/signup`, { data: usuario });
 
-  // Hacemos login con ese usuario
+  // Hacemos login
   const response = await request.post(`${API}/login`, {
     data: usuario,
   });
